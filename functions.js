@@ -1,0 +1,3 @@
+function clearPostElement() {
+	postEl.innerHTML = ''
+}
