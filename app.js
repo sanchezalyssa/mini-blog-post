@@ -1,12 +1,11 @@
+//firebase
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js'
 import {
 	getDatabase,
 	ref,
 	onValue,
 	push,
-	remove,
 } from 'https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js'
-//import { clearPostElement } from './functions'
 
 let appSettings = {
 	databaseURL:
@@ -33,7 +32,7 @@ publishBtn.addEventListener('click', function () {
 	}
 
 	if (inputEl.value && toPerson.value && fromPerson.value) {
-		push(championsInDB, postData) //push data object into database
+		push(championsInDB, postData) //push data object into firebase
 		clearInputValue() //clear text input
 	}
 })
@@ -41,11 +40,11 @@ publishBtn.addEventListener('click', function () {
 onValue(championsInDB, function (snapshot) {
 	//snapshot.exists - verify if true or false in order to delete last one in database
 	if (snapshot.exists()) {
-		clearPostElement() //need to list element to prevent adding old value
+		clearPostElement() //need to clear element to prevent adding old value
 
 		//Object.values - is the value in the database
 		let messageArray = Object.values(snapshot.val()) //need to transform to an array
-		messageArray.reverse() //make the value push it to the beginning
+		messageArray.reverse() //make the value push to the beginning
 		for (let i = 0; i < messageArray.length; i++) {
 			let currentMessage = messageArray[i]
 
