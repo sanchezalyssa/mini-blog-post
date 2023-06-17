@@ -21,11 +21,19 @@ let championsInDB = ref(database, 'champions')
 let publishBtn = document.getElementById('publish-btn')
 let inputEl = document.getElementById('text-area')
 let postEl = document.getElementById('post-el')
+let toPerson = document.getElementById('to-person')
+let fromPerson = document.getElementById('from-person')
 
 publishBtn.addEventListener('click', function () {
-	let inputValue = inputEl.value
-	if (inputValue) {
-		push(championsInDB, inputValue) //push data into database
+	//creating object to push multiple data into firebase
+	let postData = {
+		message: inputEl.value,
+		to: toPerson.value,
+		from: fromPerson.value,
+	}
+
+	if (inputEl.value && toPerson.value && fromPerson.value) {
+		push(championsInDB, postData) //push data object into database
 		clearInputValue() //clear text input
 	}
 })
@@ -36,27 +44,32 @@ onValue(championsInDB, function (snapshot) {
 		clearPostElement() //need to list element to prevent adding old value
 
 		//Object.values - is the value in the database
-		let currentItem = Object.entries(snapshot.val()) //need to transform to an array
-		currentItem.reverse() //make the value push it to the beginning
-		for (let i = 0; i < currentItem.length; i++) {
-			let postItem = currentItem[i]
+		let messageArray = Object.values(snapshot.val()) //need to transform to an array
+		messageArray.reverse() //make the value push it to the beginning
+		for (let i = 0; i < messageArray.length; i++) {
+			let currentMessage = messageArray[i]
 
-			appendToPostElement(postItem) //display the input value
+			appendToPostElement(currentMessage) //display the input value
 		}
 	}
 })
 
-function appendToPostElement(item) {
-	let itemID = item[0] //id of value in database
-	let itemValue = item[1] // value of data in database
-	let listItem = document.createElement('li') //create list element
-	listItem.textContent = itemValue
-	postEl.append(listItem)
+function appendToPostElement(message) {
+	let capitalizedTo = capitalizeFirstLetter(message.to)
+	let capitalizedFrom = capitalizeFirstLetter(message.from)
 
-	listItem.addEventListener('dblclick', function () {
-		let locationOfChampionsInDB = ref(database, `champions/${itemID}`)
-		remove(locationOfChampionsInDB)
-	})
+	let listItem = document.createElement('li')
+	listItem.innerHTML = `
+    <p class="from-and-to">To: ${capitalizedTo}</p>
+    <p class="message">${message.message}</p>
+    <p class="from-and-to">From: ${capitalizedFrom}</p>
+  `
+
+	postEl.appendChild(listItem)
+}
+//make the first letter always capital
+function capitalizeFirstLetter(string) {
+	return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
 function clearPostElement() {
@@ -65,4 +78,6 @@ function clearPostElement() {
 
 function clearInputValue() {
 	inputEl.value = ''
+	toPerson.value = ''
+	fromPerson.value = ''
 }
