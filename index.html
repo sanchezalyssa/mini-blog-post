@@ -1,36 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Mini blog</title>
-		<link rel="stylesheet" href="style.css" />
-		<!-- icon -->
-		<link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
-		<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png" />
-		<link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png" />
-		<link rel="manifest" href="img/site.webmanifest" />
-	</head>
-	<body>
-		<div class="wrapper">
-			<h2>Rate me!</h2>
-			<textarea
-				placeholder="Type here ..."
-				id="text-area"
-				class="textArea"
-			></textarea>
-			<!-- 2 inputs (to and from) -->
-			<div class="inputs" id="inputs">
-				<input type="text" id="to-person" placeholder="To:" />
-				<input type="text" id="from-person" placeholder="From:" />
-			</div>
-			<button id="publish-btn">Publish</button>
-			<ul id="post-el">
-				<!-- list here -->
-			</ul>
-		</div>
-
-		<script src="app.js" type="module"></script>
-	</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            http-equiv="X-UA-Compatible"
+            content="IE=edge" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0" />
+        <title>Mini blog</title>
+        <link
+            rel="stylesheet"
+            href="style.css" />
+        <!-- icon -->
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="img/apple-touch-icon.png" />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="img/favicon-32x32.png" />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="img/favicon-16x16.png" />
+        <link
+            rel="manifest"
+            href="img/site.webmanifest" />
+    </head>
+    <body>
+        <div
+            class="wrapper"
+            id="animation-bg">
+            <h2>Rate me!</h2>
+            <textarea
+                placeholder="Type here ..."
+                id="text-area"
+                class="textArea"></textarea>
+            <!-- 2 inputs (to and from) -->
+            <div
+                class="inputs"
+                id="inputs">
+                <input
+                    type="text"
+                    id="to-person"
+                    placeholder="To:" />
+                <input
+                    type="text"
+                    id="from-person"
+                    placeholder="From:" />
+            </div>
+            <button id="publish-btn">Publish</button>
+            <ul id="post-el">
+                <!-- list here -->
+            </ul>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.birds.min.js"></script>
+        <script>
+            VANTA.BIRDS({
+                el: "#animation-bg",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 200.0,
+                minWidth: 200.0,
+                scale: 1.0,
+                scaleMobile: 1.0,
+                quantity: 2.0,
+            })
+        </script>
+        <script
+            src="app.js"
+            type="module"></script>
+    </body>
 </html>
